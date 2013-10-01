@@ -19,9 +19,9 @@ function my_delete_function() {
 			'statusCode' => 400,
 			'simple'     => "Need a 'shorturl' parameter",
 			'message'    => 'error: missing param',
-		);	
+		);
 	}
-	
+
 	$shorturl = $_REQUEST['shorturl'];
 
 	// Check if valid shorturl
@@ -30,21 +30,23 @@ function my_delete_function() {
 			'statusCode' => 404,
 			'simple '    => 'Error: short URL not found',
 			'message'    => 'error: not found',
-		);	
+		);
 	}
-	
+
 	// Delete shorturl
-	if( yourls_delete_link_by_keyword( $shorturl ) ) {
+	$keyword = yourls_get_relative_url( $shorturl );
+
+	if( yourls_delete_link_by_keyword( $keyword ) ) {
 		return array(
 			'statusCode' => 200,
 			'simple'     => "Shorturl $shorturl deleted",
 			'message'    => 'success: deleted',
-		);	
+		);
 	} else {
 		return array(
 			'statusCode' => 500,
 			'simple'     => 'Error: could not delete shorturl, not sure why :-/',
 			'message'    => 'error: unknown error',
-		);	
+		);
 	}
 }
